@@ -1,12 +1,14 @@
 package FlipperElements;
 
-public class Ramp implements FlipperElement{
-    @Override
-    public void hit() {
+import Visitor.Visitor;
 
+public class Ramp extends FlipperElement{
+    @Override
+    public void accept(Visitor visitor) {
     }
 
-    @Override
+    public boolean isActive;
     public void toggle() {
+        isActive = !isActive;
     }
 }

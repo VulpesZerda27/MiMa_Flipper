@@ -1,11 +1,16 @@
-public class EndState implements State{
+package States;
+
+import FlipperElements.Flipper;
+
+public class PlayingState implements State{
     Flipper flipper;
-    public EndState(Flipper flipper){
+    public PlayingState(Flipper flipper){
         this.flipper = flipper;
     }
+
     @Override
     public void insertCoin() {
-        flipper.getDashboard().setCoinAmount(flipper.getDashboard().getCoinAmount() + 1);
+        flipper.dashboard.coinAmount += 1;
     }
 
     @Override

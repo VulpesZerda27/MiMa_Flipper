@@ -1,3 +1,7 @@
+package States;
+
+import FlipperElements.Flipper;
+
 public class ReadyState implements State{
     Flipper flipper;
     public ReadyState(Flipper flipper){
@@ -5,12 +9,12 @@ public class ReadyState implements State{
     }
     @Override
     public void insertCoin() {
-        flipper.getDashboard().setCoinAmount(flipper.getDashboard().getCoinAmount() + 1);
+        flipper.dashboard.coinAmount += 1;
     }
 
     @Override
     public void pressStart() {
-        flipper.setCurrentState(flipper.getPlayingState());
-        flipper.getDashboard().setBallAmount(3);
+        flipper.currentState = flipper.playingState;
+        flipper.dashboard.ballAmount = 3;
     }
 }

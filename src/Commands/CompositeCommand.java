@@ -1,3 +1,5 @@
+package Commands;
+
 import java.util.List;
 
 public class CompositeCommand implements Command{

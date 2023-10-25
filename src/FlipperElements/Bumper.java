@@ -1,13 +1,13 @@
 package FlipperElements;
-
-public class Bumper implements FlipperElement{
-    @Override
+import Visitor.Visitor;
+public class Bumper extends FlipperElement {
+    public int hits;
     public void hit() {
-
+        hits += 1;
     }
 
     @Override
-    public void toggle() {
-
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

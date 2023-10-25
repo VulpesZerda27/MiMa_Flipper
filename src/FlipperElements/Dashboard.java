@@ -1,16 +1,15 @@
+package FlipperElements;
+
 import lombok.Data;
 
-@Data
 public class Dashboard {
-    private int coinAmount;
-    private int ballAmount;
-    private int score;
-    private int multiplier;
+    public int coinAmount;
+    public int ballAmount;
+    public int score;
 
     public Dashboard(){
         coinAmount = 0;
         ballAmount = 0;
         score = 0;
-        multiplier = 0;
     }
 }

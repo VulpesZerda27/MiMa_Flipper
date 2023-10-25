@@ -1,3 +1,7 @@
+package States;
+
+import FlipperElements.Flipper;
+
 public class NoCreditState implements State{
     Flipper flipper;
     public NoCreditState(Flipper flipper){
@@ -5,8 +9,8 @@ public class NoCreditState implements State{
     }
     @Override
     public void insertCoin() {
-        flipper.getDashboard().setCoinAmount(flipper.getDashboard().getCoinAmount() + 1);
-        flipper.setCurrentState(flipper.getReadyState());
+        flipper.dashboard.coinAmount += 1;
+        flipper.currentState = flipper.readyState;
     }
 
     @Override

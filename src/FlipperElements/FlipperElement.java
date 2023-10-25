@@ -1,6 +1,4 @@
 package FlipperElements;
 
-public interface FlipperElement {
-    void hit();
-    void toggle();
+public abstract class FlipperElement implements Visitable {
 }
