@@ -1,7 +1,5 @@
 package FlipperElements;
 
-import lombok.Data;
-
 public class Dashboard {
     public int coinAmount;
     public int ballAmount;

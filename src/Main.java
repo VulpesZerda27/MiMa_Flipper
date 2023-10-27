@@ -1,19 +1,104 @@
-import FlipperElements.Flipper;
+import Commands.*;
+import Display.FontFamilyAFactory;
+import FlipperElements.*;
+import Mediator.RampTargetMediator;
+import Visitor.BallVisitor;
+import Visitor.ResetVisitor;
+import Visitor.ScoreVisitor;
+
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        Flipper flipper = Flipper.getInstance();
+        // Initialize necessary Elements
+        ScoreVisitor scoreVisitor = new ScoreVisitor();
+        ResetVisitor resetVisitor = new ResetVisitor();
+        BallVisitor ballVisitor = new BallVisitor();
 
-        System.out.println(flipper.currentState);
+        Ramp ramp = new Ramp();
+        BumperAdapter bumperAdapter = new BumperAdapter(new Bumper());
+        ArrayList<ToggleTarget> targetList = new ArrayList<>();
+
+        for(int i = 0; i<5; i++){
+            targetList.add(new ToggleTarget());
+        }
+
+        RampTargetMediator rampTargetMediator = new RampTargetMediator(ramp, targetList);
+
+        ArrayList<Visitable> flipperElements = new ArrayList<>();
+        flipperElements.add(ramp);
+        flipperElements.add(bumperAdapter);
+        flipperElements.add(rampTargetMediator);
+
+        // Initialize the Flipper
+        Flipper flipper = Flipper.getInstance(new FontFamilyAFactory(), flipperElements);
+
+        // Initialize basic commands
+        BumperHitCommand bumperHitCommand = new BumperHitCommand(bumperAdapter);
+        RampHitCommand rampHitCommand = new RampHitCommand(rampTargetMediator);
+        ActiveCheckCommand activeCheckCommand = new ActiveCheckCommand(rampTargetMediator);
+        RandomTargetHitCommand randomTargetHitCommand = new RandomTargetHitCommand(rampTargetMediator);
+
+        CompositeCommand targetHitCommand = new CompositeCommand();
+        targetHitCommand.add(activeCheckCommand);
+        targetHitCommand.add(randomTargetHitCommand);
+
+        // Composite Command to simulate game events
+        CompositeCommand someGameEvents = new CompositeCommand();
+        someGameEvents.add(bumperHitCommand);
+        someGameEvents.add(bumperHitCommand);
+        someGameEvents.add(targetHitCommand);
+        someGameEvents.add(bumperHitCommand);
+
+        // Simulated game:
+        // Try to press start
         flipper.pressStart();
-        System.out.println(flipper.currentState);
+
+        // Insert coins to start the game
         flipper.insertCoin();
         flipper.insertCoin();
-        System.out.println(flipper.dashboard.coinAmount);
-        System.out.println(flipper.currentState);
         flipper.pressStart();
-        System.out.println(flipper.currentState);
-        flipper.pressStart();
-        System.out.println(flipper.currentState);
+
+        // Ball 1
+        flipper.accept(ballVisitor);
+
+        rampHitCommand.execute();
+
+        for(int i = 0; i<6; i++) {
+            someGameEvents.execute();
+        }
+
+        flipper.accept(scoreVisitor);
+        flipper.accept(resetVisitor);
+
+        // Ball 2
+        flipper.accept(ballVisitor);
+
+        for(int i = 0; i<7; i++) {
+            someGameEvents.execute();
+        }
+
+        flipper.accept(scoreVisitor);
+        flipper.accept(resetVisitor);
+
+        // Ball 3
+        flipper.accept(ballVisitor);
+
+        for(int i = 0; i<3; i++) {
+            someGameEvents.execute();
+        }
+
+        flipper.accept(scoreVisitor);
+        flipper.accept(resetVisitor);
+
+        // Last Ball
+        flipper.accept(ballVisitor);
+
+        for(int i = 0; i<1; i++) {
+            someGameEvents.execute();
+        }
+
+        flipper.accept(scoreVisitor);
+        flipper.accept(resetVisitor);
     }
 }

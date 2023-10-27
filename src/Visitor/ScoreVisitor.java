@@ -1,9 +1,6 @@
 package Visitor;
 
-import FlipperElements.Bumper;
-import FlipperElements.Flipper;
-import FlipperElements.Ramp;
-import FlipperElements.ToggleTarget;
+import FlipperElements.*;
 import Mediator.RampTargetMediator;
 
 public class ScoreVisitor implements Visitor{
@@ -17,21 +14,21 @@ public class ScoreVisitor implements Visitor{
     @Override
     public void visit(Flipper flipper){
         flipper.dashboard.score += (tempScore * multiplier);
+        flipper.updateDisplay(flipper.displayFactory.createScoreMessage(flipper.dashboard.score));
     }
 
     @Override
-    public void visit(Bumper bumper) {
-        tempScore += (bumper.hits * 100);
+    public void visit(BumperAdapter bumperAdapter) {
+        tempScore += (bumperAdapter.getHits() * 100);
     }
 
     @Override
     public void visit(RampTargetMediator rampTargetMediator) {
-        rampTargetMediator.activeCheck();
-
         boolean modifyMultiplier = true;
         for (ToggleTarget target : rampTargetMediator.targets) {
-            if(!target.isActive || !target.isHit) modifyMultiplier = false;
-            else tempScore += 150;
+            if(!target.isActive) modifyMultiplier = false;
+            else if(target.isHit) tempScore += 150;
+            else modifyMultiplier = false;
         }
 
         if(modifyMultiplier) {

@@ -1,24 +1,23 @@
 package Visitor;
 
-import FlipperElements.Bumper;
-import FlipperElements.Flipper;
-import FlipperElements.Ramp;
-import FlipperElements.ToggleTarget;
+import FlipperElements.*;
 import Mediator.RampTargetMediator;
 
 public class ResetVisitor implements Visitor{
     @Override
     public void visit(Flipper flipper) {
+        flipper.dashboard.ballAmount -= 1;
         if(flipper.dashboard.ballAmount == 0 && flipper.currentState == flipper.playingState) flipper.currentState = flipper.endState;
-        else if (flipper.dashboard.ballAmount == 0 && flipper.currentState == flipper.endState) {
+        else if (flipper.currentState == flipper.endState) {
+            flipper.updateDisplay(flipper.displayFactory.createGameOverMessage());
             if (flipper.dashboard.coinAmount > 0) flipper.currentState = flipper.readyState;
             else flipper.currentState = flipper.noCreditState;
         }
     }
 
     @Override
-    public void visit(Bumper bumper) {
-        bumper.hits = 0;
+    public void visit(BumperAdapter bumperAdapter) {
+        bumperAdapter.resetHits();
     }
 
     @Override

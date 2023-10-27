@@ -2,12 +2,15 @@ package Mediator;
 
 import FlipperElements.*;
 import Visitor.Visitor;
-import java.util.List;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class RampTargetMediator implements ElementMediator, Visitable {
-    public Ramp ramp;
-    public List<ToggleTarget> targets;
-    public RampTargetMediator(Ramp ramp, List<ToggleTarget> targets) {
+    public final Ramp ramp;
+    public final ArrayList<ToggleTarget> targets;
+    private Random random = new Random();
+    public RampTargetMediator(Ramp ramp, ArrayList<ToggleTarget> targets) {
         this.ramp = ramp;
         this.targets = targets;
     }
@@ -22,6 +25,15 @@ public class RampTargetMediator implements ElementMediator, Visitable {
             target.isActive = ramp.isActive;
             if(!ramp.isActive) target.isHit = false;
         }
+    }
+
+    public void hitRandomTarget(){
+        int randomIndex = random.nextInt(targets.size());
+        targets.get(randomIndex).hit();
+    }
+
+    public void hitRamp() {
+        ramp.hit();
     }
 
     public void reset() {

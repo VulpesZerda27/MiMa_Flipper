@@ -10,11 +10,12 @@ public class NoCreditState implements State{
     @Override
     public void insertCoin() {
         flipper.dashboard.coinAmount += 1;
+        flipper.updateDisplay(flipper.displayFactory.createCoinMessage(flipper.dashboard.coinAmount));
         flipper.currentState = flipper.readyState;
     }
 
     @Override
     public void pressStart() {
-        System.out.println("No credit.");
+        flipper.updateDisplay(flipper.displayFactory.createCoinMessage(0));
     }
 }

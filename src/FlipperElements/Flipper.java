@@ -1,12 +1,17 @@
 package FlipperElements;
 
+import Commands.Command;
+import Display.DisplayFactory;
+import Display.DisplayMessage;
 import States.*;
 import Visitor.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Flipper implements Visitable {
     public static Flipper instance;
+    public Command gameCommands;
     public State noCreditState;
     public State readyState;
     public State playingState;
@@ -14,20 +19,23 @@ public class Flipper implements Visitable {
     public State currentState;
 
     public Dashboard dashboard;
-    public List<FlipperElement> flipperElements;
+    public DisplayFactory displayFactory;
+    public List<Visitable> flipperElements;
 
-    private Flipper(){
+    private Flipper(DisplayFactory displayFactory, ArrayList<Visitable> flipperElements){
         noCreditState = new NoCreditState(this);
         readyState = new ReadyState(this);
         playingState = new PlayingState(this);
         endState = new EndState(this);
         currentState = noCreditState;
         dashboard = new Dashboard();
+        this.displayFactory = displayFactory;
+        this.flipperElements = flipperElements;
     }
 
-    public static Flipper getInstance(){
+    public static Flipper getInstance(DisplayFactory displayFactory, ArrayList<Visitable> flipperElements){
         if(instance == null) {
-            instance = new Flipper();
+            instance = new Flipper(displayFactory, flipperElements);
         }
         return instance;
     }
@@ -39,11 +47,14 @@ public class Flipper implements Visitable {
     public void pressStart(){
         currentState.pressStart();
     }
+    public void updateDisplay(DisplayMessage message) {
+        message.display();
+    }
 
     @Override
     public void accept(Visitor visitor) {
-        for(int i = 0; i < flipperElements.size(); i++){
-            flipperElements.get(i).accept(visitor);
+        for (Visitable flipperElement : flipperElements) {
+            flipperElement.accept(visitor);
         }
         visitor.visit(this);
     }

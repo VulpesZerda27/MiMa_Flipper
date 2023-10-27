@@ -10,6 +10,7 @@ public class EndState implements State{
     @Override
     public void insertCoin() {
         flipper.dashboard.coinAmount += 1;
+        flipper.updateDisplay(flipper.displayFactory.createCoinMessage(flipper.dashboard.coinAmount));
     }
     @Override
     public void pressStart() {
