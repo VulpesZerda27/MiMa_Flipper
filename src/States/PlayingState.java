@@ -15,7 +15,8 @@ public class PlayingState implements State{
     }
 
     @Override
-    public void pressStart() {
+    public boolean pressStart() {
         System.out.println("MiMa Software");
+        return false;
     }
 }

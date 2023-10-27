@@ -44,8 +44,8 @@ public class Flipper implements Visitable {
         currentState.insertCoin();
     }
 
-    public void pressStart(){
-        currentState.pressStart();
+    public boolean pressStart(){
+        return currentState.pressStart();
     }
     public void updateDisplay(DisplayMessage message) {
         message.display();

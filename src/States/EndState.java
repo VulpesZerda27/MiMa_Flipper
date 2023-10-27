@@ -13,7 +13,8 @@ public class EndState implements State{
         flipper.updateDisplay(flipper.displayFactory.createCoinMessage(flipper.dashboard.coinAmount));
     }
     @Override
-    public void pressStart() {
+    public boolean pressStart() {
         System.out.println("MiMa Software");
+        return false;
     }
 }

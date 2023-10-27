@@ -15,7 +15,8 @@ public class NoCreditState implements State{
     }
 
     @Override
-    public void pressStart() {
+    public boolean pressStart() {
         flipper.updateDisplay(flipper.displayFactory.createCoinMessage(0));
+        return false;
     }
 }

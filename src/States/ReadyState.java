@@ -14,9 +14,12 @@ public class ReadyState implements State{
     }
 
     @Override
-    public void pressStart() {
+    public boolean pressStart() {
         flipper.updateDisplay(flipper.displayFactory.createStartMessage());
         flipper.currentState = flipper.playingState;
+        flipper.dashboard.coinAmount -= 1;
         flipper.dashboard.ballAmount = 3;
+
+        return true;
     }
 }
