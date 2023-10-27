@@ -10,12 +10,29 @@ import Visitor.ScoreVisitor;
 
 import java.util.*;
 
+// Targets only active when Ramp is active.
+// Ramp becomes active when being hit
+// Ramp becomes inactive when being hit again -> all Targets become inactive and not hit
+// Hit ramp hits single ramp
+// Hit target hits random target (possibly already hit target)
+// Hit bumper hits single bumper
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         // Choose the FontFamily
-        System.out.println("Choose the font family: \n1. Doom \n2. Slant");
+        System.out.println("Choose the font family: \n __     ______                      \n" +
+                "/  |    |  _  \\                     \n" +
+                "`| |    | | | |___   ___  _ __ ___  \n" +
+                " | |    | | | / _ \\ / _ \\| '_ ` _ \\ \n" +
+                "_| |__  | |/ / (_) | (_) | | | | | |\n" +
+                "\\___(_) |___/ \\___/ \\___/|_| |_| |_|\n" +
+                "                                    \n   ___        _____ __            __ \n" +
+                "  |__ \\      / ___// /___ _____  / /_\n" +
+                "  __/ /      \\__ \\/ / __ `/ __ \\/ __/\n" +
+                " / __/_     ___/ / / /_/ / / / / /_  \n" +
+                "/____(_)   /____/_/\\__,_/_/ /_/\\__/  \n" +
+                "                                     ");
         int choice = scanner.nextInt();
         scanner.nextLine(); // consume the newline
         DisplayFactory factory = choice == 1 ? new FontFamilyAFactory() : new FontFamilyBFactory();
@@ -75,9 +92,12 @@ public class Main {
 
             int actions = rand.nextInt(6) + 4;
             for (int i = 0; i < actions; i++) {
-                System.out.println("Choose an action: \n1. Hit Bumper \n2. Hit Ramp \n3. Hit Random Target");
-                int action = scanner.nextInt();
-                scanner.nextLine();
+                int action = 0;
+                while(action < 1 || action > 3) {
+                    System.out.println("Choose an action: \n1. Hit Bumper \n2. Hit Ramp \n3. Hit Random Target");
+                    action = scanner.nextInt();
+                    scanner.nextLine();
+                }
                 gameCommands.get(action - 1).execute();
             }
 
