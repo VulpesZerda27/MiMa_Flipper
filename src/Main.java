@@ -15,7 +15,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         // Choose the FontFamily
-        System.out.println("Choose the font family: \n1. FontFamilyA \n2. FontFamilyB");
+        System.out.println("Choose the font family: \n1. Doom \n2. Slant");
         int choice = scanner.nextInt();
         scanner.nextLine(); // consume the newline
         DisplayFactory factory = choice == 1 ? new FontFamilyAFactory() : new FontFamilyBFactory();

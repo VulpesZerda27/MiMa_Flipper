@@ -10,6 +10,12 @@ public class FontFamilyBScoreMessage implements DisplayMessage {
         }
 
         public void display() {
-            System.out.println("[FontFamilyB] Score: " + score);
+            System.out.println("   _____                    \n" +
+                    "  / ___/_________  ________ \n" +
+                    "  \\__ \\/ ___/ __ \\/ ___/ _ \\\n" +
+                    " ___/ / /__/ /_/ / /  /  __/\n" +
+                    "/____/\\___/\\____/_/   \\___/ \n" +
+                    "                            ");
+            System.out.println(score);
         }
     }
