@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Flipper implements Visitable {
-    public static Flipper instance;
+    private static Flipper instance;
     public Command gameCommands;
     public State noCreditState;
     public State readyState;
