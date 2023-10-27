@@ -10,6 +10,8 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
         // Initialize necessary Elements
         ScoreVisitor scoreVisitor = new ScoreVisitor();
         ResetVisitor resetVisitor = new ResetVisitor();
@@ -51,14 +53,18 @@ public class Main {
         someGameEvents.add(bumperHitCommand);
 
         // Simulated game:
+
+        pressAnyKeyToResume(scanner);
         // Try to press start
         flipper.pressStart();
 
+        pressAnyKeyToResume(scanner);
         // Insert coins to start the game
         flipper.insertCoin();
         flipper.insertCoin();
         flipper.pressStart();
 
+        pressAnyKeyToResume(scanner);
         // Ball 1
         flipper.accept(ballVisitor);
 
@@ -71,6 +77,7 @@ public class Main {
         flipper.accept(scoreVisitor);
         flipper.accept(resetVisitor);
 
+        pressAnyKeyToResume(scanner);
         // Ball 2
         flipper.accept(ballVisitor);
 
@@ -81,6 +88,7 @@ public class Main {
         flipper.accept(scoreVisitor);
         flipper.accept(resetVisitor);
 
+        pressAnyKeyToResume(scanner);
         // Ball 3
         flipper.accept(ballVisitor);
 
@@ -91,6 +99,7 @@ public class Main {
         flipper.accept(scoreVisitor);
         flipper.accept(resetVisitor);
 
+        pressAnyKeyToResume(scanner);
         // Last Ball
         flipper.accept(ballVisitor);
 
@@ -100,5 +109,11 @@ public class Main {
 
         flipper.accept(scoreVisitor);
         flipper.accept(resetVisitor);
+    }
+
+    public static void pressAnyKeyToResume(Scanner scanner){
+        System.out.println();
+        System.out.println("Press any key to continue");
+        scanner.nextLine();
     }
 }
